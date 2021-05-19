@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "/protos";
+
+message Product{
+int32 PID = 1;
+string Name = 2;
+float Price = 3;
+string currency = 4;
+}
+
+message ProductRequest{
+    int32 id = 1;
+    string currency = 2;
+}
+
+
+service ProductServices {
+    rpc GetProduct (ProductRequest) returns (Product);
+}
