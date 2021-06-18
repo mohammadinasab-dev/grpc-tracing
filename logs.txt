@@ -14,3 +14,7 @@ ERROR: 2021/05/19 14:56:28 dbhandler.go:39: i'm here in DBGetProduct
 INFO: 2021/05/19 14:56:28 conversion.go:32: i'm here in the convert function
 ERROR: 2021/05/19 14:59:21 dbhandler.go:39: i'm here in DBGetProduct
 INFO: 2021/05/19 14:59:21 conversion.go:32: i'm here in the convert function
+ERROR: 2021/05/19 15:41:17 dbhandler.go:39: i'm here in DBGetProduct
+INFO: 2021/05/19 15:41:17 conversion.go:32: i'm here in the convert function
+ERROR: 2021/06/18 16:27:30 dbhandler.go:39: i'm here in DBGetProduct
+INFO: 2021/06/18 16:27:30 conversion.go:32: i'm here in the convert function

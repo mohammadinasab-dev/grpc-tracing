@@ -22,6 +22,7 @@ func NewBuisness(STDLog *logwrapper.STDLog, product *data.Product) (*Buisness, e
 func getRate(base, dest string) float32 {
 
 	//do or call sth to get the rate
+	//clinet to other grpc microservice
 	rate := 1.5
 	return float32(rate)
 

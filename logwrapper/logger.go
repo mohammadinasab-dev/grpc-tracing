@@ -23,10 +23,3 @@ func NewSTDLog() (*STDLog, error) {
 		ErrorLogger:   log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile),
 	}, nil
 }
-
-// func main() {
-//     InfoLogger.Println("Starting the application...")
-//     InfoLogger.Println("Something noteworthy happened")
-//     WarningLogger.Println("There is something you should know about")
-//     ErrorLogger.Println("Something went wrong")
-// }
