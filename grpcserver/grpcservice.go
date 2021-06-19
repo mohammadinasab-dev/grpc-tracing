@@ -6,7 +6,12 @@ import (
 	"mohammadinasab-dev/grpctask/data"
 	"mohammadinasab-dev/grpctask/logwrapper"
 	"mohammadinasab-dev/grpctask/protos"
+
+	"github.com/mohammadinasab-dev/grpctask/data"
+	"github.com/opentracing/opentracing-go"
 )
+
+const service_name_db_query_product = "db query product"
 
 type GrpcServer struct {
 	STDLog    *logwrapper.STDLog
@@ -21,12 +26,21 @@ func NewGrpcServer(STDLog *logwrapper.STDLog, db data.DBProductCrudinterface) (*
 }
 
 func (server *GrpcServer) GetProduct(ctx context.Context, in *protos.ProductRequest) (*protos.Product, error) {
-	//log every things here
-	product, err := server.dbhandler.DBGetProduct(in)
-	if err != nil {
-		server.STDLog.ErrorLogger.Println(err)
-		return nil, err
+	var product *data.Product
+	var err error
+	if parent := opentracing.SpanFromContext(ctx); parent != nil {
+		pctx := parent.Context()
+		if tracer := opentracing.GlobalTracer(); tracer != nil {
+			mysqlSpan := tracer.StartSpan(service_name_db_query_product, opentracing.ChildOf(pctx))
+			defer mysqlSpan.Finish()
+			product, err = server.dbhandler.DBGetProduct(in)
+			if err != nil {
+				server.STDLog.ErrorLogger.Println(err)
+				return nil, err
+			}
+		}
 	}
+
 	//ConvertCurrency(in.currency, product.currency)(product)
 	buisness, err := buisness.NewBuisness(server.STDLog, product)
 	if err != nil {

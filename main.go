@@ -1,17 +1,14 @@
 package main
 
 import (
-	"context"
 	"flag"
-	"fmt"
 	"log"
+	"mohammadinasab-dev/grpctask/grpcclient"
 	"mohammadinasab-dev/grpctask/grpcserver"
 	"mohammadinasab-dev/grpctask/logwrapper"
-	"mohammadinasab-dev/grpctask/protos"
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
-	"google.golang.org/grpc"
 )
 
 func main() {
@@ -28,29 +25,7 @@ func main() {
 	case "s":
 		grpcserver.RunGrpcServer(STDLog)
 	case "c":
-		runGrpcClient()
+		grpcclient.RunGrpcClient()
 	}
-
-}
-
-func runGrpcClient() {
-	conn, err := grpc.Dial("127.0.0.1:8282", grpc.WithInsecure())
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer conn.Close()
-
-	client := protos.NewProductServicesClient(conn)
-	var Pid int
-	var currency string
-	fmt.Println("Enter product id")
-	fmt.Scanln(&Pid)
-	fmt.Println("Enter your currency")
-	fmt.Scanln(&currency)
-	product, err := client.GetProduct(context.Background(), &protos.ProductRequest{Id: int32(Pid), Currency: currency})
-	if err != nil {
-		log.Fatalln(err)
-	}
-	fmt.Println(product)
 
 }

@@ -14,10 +14,6 @@ type MySqlDB struct {
 	STDLog *logwrapper.STDLog
 }
 
-// type MyOtherDB struct {
-// 	DB *Other.DB
-// }
-
 func CreateMySQLDBConnection(config configuration.Config, STDLog *logwrapper.STDLog) (*MySqlDB, error) {
 	connstring := fmt.Sprintf(config.DBUsername + ":" + config.DBPassword + "@" + config.DBAddress + "/" + config.DBName + "?charset=utf8mb4&parseTime=True&loc=Local")
 	db, err := gorm.Open(config.DBDriver, connstring)
@@ -45,8 +41,3 @@ func (ms *MySqlDB) DBGetProduct(in *protos.ProductRequest) (*Product, error) { /
 	}
 	return product, nil
 }
-
-// func (ms MyOtherDB) DBGetProduct() {
-// ms.STDLog.ErrorLogger.Println("i'm here in DBGetProduct")
-// 	fmt.Println("here we are going to add aproduct to the database and ms is:", ms)
-// }
